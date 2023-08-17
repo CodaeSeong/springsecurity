@@ -1,7 +1,6 @@
 package com.jwt.security.service;
 
 import com.jwt.security.entity.EmployeeSecret;
-import com.jwt.security.entity.EmployeeSecretId;
 import com.jwt.security.model.RegisterModel;
 import com.jwt.security.repository.EmployeeSecretRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,23 +17,16 @@ public class LoginServiceImpl implements LoginService{
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public void loginSystem(RegisterModel registerModel){
+    public void loginSystem(EmployeeSecret user){
 
-        EmployeeSecret employeeSecret = new EmployeeSecret();
-        EmployeeSecretId id = new EmployeeSecretId();
+        user.setAuthorityCode("USER");
 
-        id.setCompanyCode(registerModel.getCompanyCode());
-        id.setEmpCode(registerModel.getEmpCode());
-
-        employeeSecret.setId(id);
-        employeeSecret.setAuthorityCode("USER");
-
-        String rawUserPassword = registerModel.getUserPassword();
+        String rawUserPassword = user.getUserPassword();
         String encPassword = bCryptPasswordEncoder.encode((rawUserPassword));
-        employeeSecret.setUserPassword(encPassword);
+        user.setUserPassword(encPassword);
 
-        System.out.println("employeeSecret = " + employeeSecret);
+        System.out.println("user = " + user);
 
-        employeeSecretRepository.save(employeeSecret);
+        employeeSecretRepository.save(user);
     }
 }

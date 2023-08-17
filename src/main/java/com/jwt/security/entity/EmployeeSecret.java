@@ -2,6 +2,7 @@ package com.jwt.security.entity;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,8 +11,10 @@ import lombok.Setter;
 @Data
 public class EmployeeSecret {
 
-    @EmbeddedId
-    private EmployeeSecretId id;
+    @Id
+    private String empCode;
+
+    private String companyCode;
 
     private String userPassword;
 

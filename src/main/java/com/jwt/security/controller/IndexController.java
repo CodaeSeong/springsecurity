@@ -54,10 +54,10 @@ public class IndexController {
     }
 
     @PostMapping("/join")
-    public String join(RegisterModel registerModel) {
+    public String join(EmployeeSecret user) {
 
-        loginService.loginSystem(registerModel);
+        loginService.loginSystem(user);
 
-        return "redirect:/login";
+        return "redirect:/loginForm";
     }
 }
