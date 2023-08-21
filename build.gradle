@@ -30,6 +30,7 @@ dependencies {
 	implementation group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4.1', version: '1.16'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	annotationProcessor 'org.projectlombok:lombok'
+	implementation( 'org.springframework.boot:spring-boot-starter-oauth2-client:2.5.7')
 	testImplementation 'org.springframework.security:spring-security-test'
 }
 

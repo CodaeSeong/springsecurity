@@ -1,4 +1,4 @@
-package com.jwt.security.auth;
+package com.jwt.security.config.auth;
 
 import com.jwt.security.entity.EmployeeSecret;
 import com.jwt.security.repository.EmployeeSecretRepository;

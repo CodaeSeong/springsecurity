@@ -1,12 +1,14 @@
-package com.jwt.security.auth;
+package com.jwt.security.config.auth;
 
 import com.jwt.security.entity.EmployeeSecret;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
+@Data
 public class PrincipalDetails implements UserDetails {
 
     private EmployeeSecret user;
