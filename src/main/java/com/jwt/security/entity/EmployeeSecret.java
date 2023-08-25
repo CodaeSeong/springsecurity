@@ -1,11 +1,9 @@
 package com.jwt.security.entity;
 
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Data
@@ -18,5 +16,16 @@ public class EmployeeSecret {
 
     private String userPassword;
 
-    private String authorityCode;
+    private String role;
+
+    @Builder
+    public EmployeeSecret(String empCode, String companyCode, String userPassword, String role) {
+        this.empCode = empCode;
+        this.companyCode = companyCode;
+        this.userPassword = userPassword;
+        this.role = role;
+    }
+
+    public EmployeeSecret() {
+    }
 }

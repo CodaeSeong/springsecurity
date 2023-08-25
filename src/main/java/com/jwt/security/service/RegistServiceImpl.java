@@ -18,7 +18,7 @@ public class RegistServiceImpl implements RegistService {
     @Override
     public void registSystem(EmployeeSecret user){
 
-        user.setAuthorityCode("ROLE_USER");
+        user.setRole("ROLE_USER");
 
         String rawUserPassword = user.getUserPassword();
         String encPassword = bCryptPasswordEncoder.encode((rawUserPassword));

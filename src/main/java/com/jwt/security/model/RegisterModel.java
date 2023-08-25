@@ -1,8 +1,6 @@
 package com.jwt.security.model;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Data
 public class RegisterModel {
@@ -13,5 +11,5 @@ public class RegisterModel {
 
     private String userPassword;
 
-    private String authorityCode;
+    private String role;
 }
