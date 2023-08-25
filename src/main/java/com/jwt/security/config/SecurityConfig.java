@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 // 1.코드받기(인증)
 // 2.엑세스토큰(권한)
@@ -26,9 +27,15 @@ public class SecurityConfig {
     @Autowired
     private PrincipalOauth2UserService principalOauth2UserService;
 
+    @Bean
+    public AuthenticationSuccessHandler myAuthenticationSuccessHandler(){
+        return new MySimpleUrlAuthenticationSuccessHandler();
+    }
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
         http.csrf().disable();
         http.authorizeHttpRequests()
                 .requestMatchers("/user/**").authenticated()
@@ -45,10 +52,12 @@ public class SecurityConfig {
                 .and()
                 .oauth2Login()
                 .loginPage("/loginForm")
+                .successHandler(myAuthenticationSuccessHandler())
                 .userInfoEndpoint()
                 .userService(principalOauth2UserService);//구글 로그인이 완료된 뒤의 후처리가 필요함. Tip. 코드X, (엑세스토큰+사용자프로필정보 O)
 
-
                 return http.build();
+
+
     }
 }
