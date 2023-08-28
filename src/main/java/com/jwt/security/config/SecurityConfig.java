@@ -1,5 +1,7 @@
 package com.jwt.security.config;
 
+import com.jwt.security.config.jwt.JwtAuthenticationFilter;
+import com.jwt.security.config.jwt.JwtTokenProvider;
 import com.jwt.security.config.oauth.PrincipalOauth2UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +15,7 @@ import org.springframework.security.config.annotation.web.configurers.AuthorizeH
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 // 1.코드받기(인증)
 // 2.엑세스토큰(권한)
@@ -26,6 +29,10 @@ public class SecurityConfig {
 
     @Autowired
     private PrincipalOauth2UserService principalOauth2UserService;
+
+    @Autowired
+
+    private JwtTokenProvider jwtTokenProvider;
 
     @Bean
     public AuthenticationSuccessHandler myAuthenticationSuccessHandler(){
@@ -50,11 +57,16 @@ public class SecurityConfig {
                 .loginProcessingUrl("/login")
                 .defaultSuccessUrl("/")
                 .and()
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
+                        UsernamePasswordAuthenticationFilter.class)
                 .oauth2Login()
                 .loginPage("/loginForm")
+                .defaultSuccessUrl("/test")
                 .successHandler(myAuthenticationSuccessHandler())
                 .userInfoEndpoint()
                 .userService(principalOauth2UserService);//구글 로그인이 완료된 뒤의 후처리가 필요함. Tip. 코드X, (엑세스토큰+사용자프로필정보 O)
+
+
 
                 return http.build();
 

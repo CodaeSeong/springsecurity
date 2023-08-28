@@ -5,6 +5,8 @@ import com.jwt.security.entity.EmployeeSecret;
 import com.jwt.security.model.RegisterModel;
 
 import com.jwt.security.service.RegistService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,7 +17,10 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @Controller
+@CrossOrigin("*")
 public class IndexController {
 
     @Autowired
@@ -103,5 +108,7 @@ public class IndexController {
     public String info() {
         return "info";
     }
+    
+
 
 }
