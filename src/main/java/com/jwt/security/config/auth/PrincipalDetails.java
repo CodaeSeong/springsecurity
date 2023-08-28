@@ -1,54 +1,47 @@
 package com.jwt.security.config.auth;
 
-import com.jwt.security.entity.EmployeeSecret;
+
+
+import com.jwt.security.entity.JwtUser;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
+
+
+
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
 
 @Data
-public class PrincipalDetails implements UserDetails, OAuth2User {
+public class PrincipalDetails implements UserDetails {
 
-    private EmployeeSecret user;
 
-    private Map<String,Object> attributes;
 
-    public PrincipalDetails(EmployeeSecret user, Map<String, Object> attributes) {
-        this.user = user;
-        this.attributes = attributes;
+    private JwtUser jwtUser;
+
+    public PrincipalDetails(JwtUser jwtUser) {
+        this.jwtUser = jwtUser;
     }
-
-    public PrincipalDetails(EmployeeSecret user){
-        this.user = user;
-    }
-
-    public PrincipalDetails(){}
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection<GrantedAuthority> collect = new ArrayList<>();
-        collect.add(new GrantedAuthority(){
 
-            @Override
-            public String getAuthority() {
-                return user.getRole();
-            }
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        jwtUser.getRoleList().forEach(r-> {
+            authorities.add(()->r);
         });
-        return collect;
+        return authorities;
     }
 
     @Override
     public String getPassword() {
-        return user.getUserPassword();
+        return jwtUser.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getEmpCode();
+        return jwtUser.getUsername();
     }
 
     @Override
@@ -69,15 +62,5 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    @Override
-    public Map<String, Object> getAttributes() {
-        return attributes;
-    }
-
-    @Override
-    public String getName() {
-        return null;
     }
 }
