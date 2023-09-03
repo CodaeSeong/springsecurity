@@ -29,6 +29,7 @@ public class PrincipalDetails implements UserDetails {
 
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         jwtUser.getRoleList().forEach(r-> {
+            System.out.println("r = " + r);
             authorities.add(()->r);
         });
         return authorities;

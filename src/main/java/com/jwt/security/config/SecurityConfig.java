@@ -62,16 +62,16 @@ public class SecurityConfig {
                 .httpBasic().disable()
                 .authorizeHttpRequests( authorize -> authorize
                         .requestMatchers("/api/v1/user/**")
-                        .hasAnyRole("ROLE_USER","ROLE_MANAGER","ROLE_ADMIN")
+                        .hasAnyRole("USER","MANAGER","ADMIN")
                         .requestMatchers("/api/v1/manager/**")
-                        .hasAnyRole("ROLE_MANAGER","ROLE_ADMIN")
+                        .hasAnyRole("MANAGER","ADMIN")
                         .requestMatchers("/api/v1/admin/**")
-                        .hasRole("ROLE_ADMIN")
+                        .hasRole("ADMIN")
                         .anyRequest().permitAll()
 
                 );
 
-        return http.build();
+                        return http.build();
 
 
 
